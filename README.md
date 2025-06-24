@@ -1,41 +1,71 @@
-**Probleme lier a la fonction fonction de regle ligne 377**
-Si il demande l exemple Le gateaux est posé sur la table tu vas avoir l erreur le_est_posé car la fonction des rules ne respecte pas l ordre mais juste le contenue 
-Le gateaux bleu est mangé tu vas avoir un probleme genre le bleu mangé 
-**Probleme lier au dernier GN**
-Le chat mange la souris. Elle est morte ==> Probleme lier a la lecture des GN et ne prends pas en compte le dernier GN ou verif du node d origine incorrect
-**Groupe nominal non detecter en entier**
-Car la regles n existe pas
-le petit chat roux ==> [le_petit_chat] + [roux]
+# 📚 Analyseur Syntaxique – README
 
+## ⚠️ Problèmes identifiés
 
-**Erreur Reseau mais rare**
-Erreur ROUGE ca mere c est ecrit
+### 🧩 1. Fonction de règles (ligne 377)
+- **Problème** : Les règles ne tiennent pas compte de l’ordre des types, seulement de leur présence.
+- **Conséquence** :  
+  - Exemple : `"Le gâteau est posé sur la table"` → erreur `le_est_posé`.
+  - Exemple : `"Le gâteau bleu est mangé"` → erreur probable du type `le_bleu_mangé`.
 
-**Pas de wordType**
-Car pas de gestion des retours vide et pas de double verification dans le retours de l appel de JDM_api.py
+### 🧠 2. Problème lié au dernier GN
+- Exemple : `"Le chat mange la souris. Elle est morte"`  
+- **Erreur** : Mauvaise gestion des GN (groupes nominaux), le dernier GN n'est pas correctement pris en compte ou mauvaise vérification du node d’origine.
 
-**Points Positif**
-Extensibilité des class nodes et supernode pour ajouter des argument et parametre
-Ce qui permet l ajout de nouvelle fonction pour ameliore les traitement
+### 🧱 3. Groupe nominal non détecté en entier
+- Exemple : `"le petit chat roux"` → [le_petit_chat] + [roux]
+- **Cause** : Absence de règle pour traiter ce type de séquence complète.
 
-**Points Negatif**
-La partie verif des regles ligne 377, ne verifie pas les type dans l ordre mais si il existe une regles avec eux par exemple
-Det+Adj c est la meme chose que Adj+Det hors c est faux
+### 🌐 4. Erreur réseau (rare)
+- Exemple : `"ROUGE sa mère c'est écrit"`  
+- **Note** : Ce type d’erreur est rare, mais a été observé.
 
-C est long je sais pas pourquoi
+### ❓ 5. Pas de `wordType`
+- **Cause** :  
+  - Pas de gestion des retours vides.
+  - Absence de double vérification dans les réponses de `JDM_api.py`.
 
-**Amelioration**
-Utiliser a 100% l API de JDM car actuellement projet basé sur celui de l an dernier pour la meilleur comprehension 
-Meilleur structuration en mettant les traitements sour forme de fonction
+---
 
-J ai oublié de mettre les relation entre le verbe et le node suivant
+## ✅ Points positifs
 
+### ♻️ Extensibilité des classes `Node` et `SuperNode`
+- Permet l’ajout de nouveaux arguments et paramètres.
+- Facilite l’intégration de nouvelles fonctions pour améliorer les traitements syntaxiques et sémantiques.
 
-**Pourquoi Node et SuperNode**
-Node represente les mots seul
-SuperNode representer les groupe de mot et ceux qui son seul apres traitement
+---
 
-> ***Exemple qui fonctionne***
-> Le petit chat boit du lait.
-> Le petit chat boit du lait.Il est heureux
-> le gateaux est delicieux
+## ❌ Points négatifs
+
+### 🔁 Vérification des règles (ligne 377)
+- Les types sont détectés indépendamment de leur ordre.
+- **Exemple** : Une règle `Det + Adj` est acceptée même si l’ordre est `Adj + Det`, ce qui est incorrect.
+
+### 🐢 Performance
+- Le traitement est **long**, cause non identifiée.
+
+---
+
+## 🛠️ Améliorations proposées
+
+1. Utiliser **pleinement** l’API de **JeuxDeMots (JDM)** – actuellement, le projet repose encore sur la structure de l’année précédente.
+2. **Meilleure structuration** du code :
+   - Extraire les traitements sous forme de **fonctions claires**.
+3. Ajouter les **relations entre le verbe et le node suivant** pour renforcer l’analyse grammaticale.
+
+---
+
+## 🧬 Architecture : Pourquoi `Node` et `SuperNode` ?
+
+- `Node` représente un **mot isolé**.
+- `SuperNode` regroupe :
+  - les **groupes de mots** (ex. groupes nominaux),
+  - ou les **mots seuls** après traitement.
+
+---
+
+## ✅ Exemples qui fonctionnent
+
+- `"Le petit chat boit du lait."`
+- `"Le petit chat boit du lait. Il est heureux."`
+- `"Le gâteau est délicieux."`
