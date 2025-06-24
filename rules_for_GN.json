@@ -1,0 +1,11 @@
+[
+
+    {
+        "pattern": ["Det:", "Adj:", "Nom:"],
+        "resultat": "GN:"
+    },
+    {
+        "pattern": ["Det:", "Nom:"],
+        "resultat": "GN:"
+    }
+]
